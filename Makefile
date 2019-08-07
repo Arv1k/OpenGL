@@ -1,23 +1,24 @@
-SYSCONF_LINK = g++
-CPPFLAGS     = -Wall -Wextra -Weffc++ -pedantic -std=c++98
-LDFLAGS      = -O3
-LIBS         = -lm
+# ----- variables
+COMPILER = g++
+CPPFLAGS = -Wall -Wextra -Weffc++ -pedantic 
+LDFLAGS = -O3
+# -----
 
-DESTDIR = ./
-TARGET  = main
+all: main.o tgaimage.o
+	$(COMPILER) $(LDFLAGS) $(CPPFLAGS) main.o tgaimage.o -o main.out
 
-OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+start: all
+	./main.out
+	xviewer output.tga
 
-all: $(DESTDIR)$(TARGET)
+main.o: main.cpp
+	$(COMPILER) $(LDFLAGS) $(CPPFLAGS) -c main.cpp
 
-$(DESTDIR)$(TARGET): $(OBJECTS)
-	$(SYSCONF_LINK) -Wall $(LDFLAGS) -o $(DESTDIR)$(TARGET) $(OBJECTS) $(LIBS)
-
-$(OBJECTS): %.o: %.cpp
-	$(SYSCONF_LINK) -Wall $(CPPFLAGS) -c $(CFLAGS) $< -o $@
+tgaimage.o: tgaimage.cpp
+	$(COMPILER) $(LDFLAGS) $(CPPFLAGS) -c tgaimage.cpp
 
 clean:
-	-rm -f $(OBJECTS)
-	-rm -f $(TARGET)
+	-rm -f *.out
+	-rm -f *.o
 	-rm -f *.tga
 
