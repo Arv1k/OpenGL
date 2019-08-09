@@ -7,7 +7,7 @@ LDFLAGS = -O3
 all: main.o tgaimage.o
 	$(COMPILER) $(LDFLAGS) $(CPPFLAGS) main.o tgaimage.o -o main.out
 
-start: all
+start: 
 	./main.out
 	xviewer output.tga
 
