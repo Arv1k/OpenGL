@@ -1,6 +1,6 @@
 # ----- variables
 COMPILER = g++
-CPPFLAGS = -Wall -Wextra -Weffc++ -pedantic 
+CPPFLAGS = -Wall -Wextra -Weffc++ -pedantic -g
 LDFLAGS = -O3
 # -----
 

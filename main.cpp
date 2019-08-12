@@ -12,26 +12,35 @@ struct dot {
   int y = 0;
 };
 
-void line(dot d1, dot d2, TGAImage &image);
+#ifndef DEBUG
+#define PRINTF() printf()
+
+#else 
+#define PRINTF() ;
+
+#endif
+
+
+void line(dot d1, dot d2, TGAImage &image, TGAColor color);
 
 int main() {
-  int height = 0;
-  int width = 0;
+  int height = 100;
+  int width = 100;
 
-  printf("Enter height of image:\n");
-  scanf("%d", &height);
+  // printf("Enter height of image:\n");
+  // scanf("%d", &height);
 
-  printf("\nEnter width of image:\n");
-  scanf("%d", &width);
+  // printf("\nEnter width of image:\n");
+  // scanf("%d", &width);
 
   TGAImage image(height, width, TGAImage::RGB);
 
   dot d1;
   dot d2;
 
-  int trying = 0;
+  // int trying = 0;
 
-  do {
+  /* do {
     if (trying == 2) {
       printf("Wrong coordinates!\n\n");
       return -1;
@@ -56,15 +65,18 @@ int main() {
     printf("y2 = ");
     scanf("%d", &d2.y);
   } while (d2.x > width || d2.y > height || trying == 3);
-  
-  line(d1, d2, image);
+  */
+  //line({  0, 0  }, {0,   100}, image, green);
+  line({  0, 100}, {100, 100}, image, green);
+  line({100, 100}, {100, 0  }, image, green);
+  line({100, 0  }, {0,   0  }, image, green);
 
   image.flip_vertically();
 
   image.write_tga_file("output.tga");
 }
 
-void line(dot d1, dot d2, TGAImage &image) {
+void line(dot d1, dot d2, TGAImage &image, TGAColor color) {
   int deltax = abs(d2.x - d1.x);
   int deltay = abs(d2.y - d1.y);
  
@@ -86,9 +98,9 @@ void line(dot d1, dot d2, TGAImage &image) {
   int deltaerr = deltay; 
   int error = 0;
 
-  for (x; x <= x1; x++) {
-    if (x1 == d2.x) image.set(x, y, white);
-    else            image.set(y, x, white);
+  for (; x <= x1; x++) {
+    if (x1 == d2.x) image.set(x, y, color);
+    else            image.set(y, x, color);
 
     error += deltaerr;
 
